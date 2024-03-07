@@ -1,0 +1,71 @@
+
+public class Main {
+  public static void main(String[] args) {
+    char[][] image = {
+        { '#', 'x', '#', '#', '#' },
+        { '#', ' ', ' ', ' ', '#' },
+        { '#', ' ', 'E', ' ', '#' },
+        { '*', ' ', ' ', ' ', '|' },
+        { '#', ' ', ' ', ' ', '#' },
+        { '#', ' ', ' ', ' ', '#' },
+        { '#', '#', '#', 'y', '#' },
+    };
+
+    System.out.println("Original Image:");
+    displayImage(image);
+
+    char[][] horizontallyFlippedImage = horizontalMirror(image);
+    System.out.println("Horizontally flipped image:");
+    displayImage(horizontallyFlippedImage);
+
+    char[][] verticallyFlippedImage = verticalMirror(image);
+    System.out.println("Vertically flipped image:");
+    displayImage(verticallyFlippedImage);
+
+    char[][] horizontallyAndVerticallyFlippedImage = flipHorizontallyAndVertically(image);
+    System.out.println("Horizontally and Vertically flipped image:");
+    displayImage(horizontallyAndVerticallyFlippedImage);
+  }
+
+  private static void displayImage(char[][] image) {
+    for (char[] row : image) { // for each row in the image
+      for (char pixel : row) { // for each pixel in the row
+        System.out.print(pixel); // print the pixel
+      }
+      System.out.println();
+    }
+  }
+
+  private static char[][] horizontalMirror(char[][] image) {
+    char[][] result = new char[image.length][image[0].length]; 
+    //the new char is creating a new 2D array called result with the same dimensions as the original image.
+    //[image.length] retrieves the same dimensions as the original image
+    // image[0].length retrieves the number of columns in the first row of the image array, this is the second dimesnsion
+    for (int i = 0; i < image.length; i++) { // itereate over each row in the image
+      for (int j = 0; j < image[i].length; j++) { // iterate over each character in the row
+        result[i][j] = image[i][image[i].length - j - 1];
+        //image[i] refers to the current row in the original image array
+        //image[i].length gets the total number of columns in the current row which is the width
+        //image[i] starts at 0 (row)
+        // image[i].length 5 (length of the row)
+        // image[i].length - j - 1 (j starts at 0)
+        // So the first iteration is image[0][5-0-1]; which is really [0][4] which prints out the fifth element #, but with the new result array that becomes [0][0]
+      }
+    }
+    return result;
+  }
+
+  private static char[][] verticalMirror(char[][] image) {
+      char[][] result = new char[image.length][image[0].length];
+      for (int i = 0; i < image.length; i++) {
+          for (int j = 0; j < image[i].length; j++) {
+              result[i][j] = image[image.length - i - 1][j];
+          }
+      }
+      return result;
+  }
+
+  private static char[][] flipHorizontallyAndVertically(char[][] image) {
+    return verticalMirror(horizontalMirror(image));
+  }
+}
